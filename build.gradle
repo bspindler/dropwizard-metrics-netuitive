@@ -1,0 +1,25 @@
+group 'io.dropwizard.metrics'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea' 
+
+sourceCompatibility = 1.8
+
+project.ext {
+    dropwizardVersion = '0.9.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile (
+            'io.dropwizard:dropwizard-core:' + dropwizardVersion
+    )
+
+}
