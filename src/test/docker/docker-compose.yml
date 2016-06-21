@@ -9,10 +9,10 @@ services:
     image: netuitive/docker-agent
     mem_limit: 128m
     environment:
-      - APIKEY=f6cf782ed2168b8adc5584dbd1cfcbde
-      - APIHOST=api.uat.netuitive.com:443
+      - APIKEY=netuitive-api-key
+      - APIHOST=api.app.netuitive.com:443
       - HTTPVAR=https
-      - DOCKER_HOSTNAME=local-docker-host
+      - DOCKER_HOSTNAME=docker-host-dropwizard-test
     volumes:
       - /proc:/host_proc:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
