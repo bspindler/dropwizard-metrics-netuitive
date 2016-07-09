@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Dropwizard-metrics-netuitive by bspindler</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Dropwizard-metrics-netuitive</h1>
+        <h2>library for adding a &#39;netuitive&#39; reporter type to dropwizard. </h2>
+
+        <section id="downloads">
+          <a href="https://github.com/bspindler/dropwizard-metrics-netuitive/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/bspindler/dropwizard-metrics-netuitive/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/bspindler/dropwizard-metrics-netuitive" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="dropwizardio-netuitive-reporter-for-sending-metrics-to-netuitives-linux-agent" class="anchor" href="#dropwizardio-netuitive-reporter-for-sending-metrics-to-netuitives-linux-agent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.dropwizard.io/">DropWizard.io</a> <code>netuitive</code> reporter for sending metrics to Netuitive's Linux agent.</h1>
+
+<h2>
+<a id="add-bintray-repository" class="anchor" href="#add-bintray-repository" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>add bintray repository</h2>
+
+<p>Go <a href="https://bintray.com/bspindler/netuitive">here </a> and click "Set Me Up!" w/help getting the repository setup.</p>
+
+<h2>
+<a id="add-dropwizard-metrics-netuitive-to-your-pom" class="anchor" href="#add-dropwizard-metrics-netuitive-to-your-pom" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>add <code>dropwizard-metrics-netuitive</code> to your pom</h2>
+
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;io.dropwizard.metrics&lt;/groupId&gt;
+  &lt;artifactId&gt;metrics-netuitive&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;type&gt;pom&lt;/type&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h2>
+<a id="add-to-your-dropwizardio-configyml" class="anchor" href="#add-to-your-dropwizardio-configyml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>add to your dropwizard.io config.yml</h2>
+
+<pre><code>metrics:
+  frequency: 1 minute
+  reporters:
+      - type: netuitive
+        host: localhost
+        port: 8125
+</code></pre>
+
+<h2>
+<a id="testing-wdocker-stack" class="anchor" href="#testing-wdocker-stack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing w/Docker stack</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left">dir</th>
+<th align="left">purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">src/test/docker</td>
+<td align="left">root directory for this test suite</td>
+</tr>
+<tr>
+<td align="left">src/test/docker/docker-dropwizard-example</td>
+<td align="left">dropwizard example  application for testing</td>
+</tr>
+<tr>
+<td align="left">src/test/docker/docker-compose.yml</td>
+<td align="left">docker-compose file used to define and launch test environment</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="runtime-environment-used-for-testing" class="anchor" href="#runtime-environment-used-for-testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>runtime environment used for testing</h3>
+
+<ul>
+<li>Docker version 1.10.3, build 20f81dd</li>
+<li>docker-compose version 1.6.2, build 4d72027</li>
+<li>VirtualBox Version 5.0.16 r105871</li>
+</ul>
+
+<h3>
+<a id="docker-stack-defines-two-containers" class="anchor" href="#docker-stack-defines-two-containers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker stack defines two containers:</h3>
+
+<ul>
+<li>dropwizard:
+
+<ul>
+<li>example dropwizard app w/dropwizard-metrics-netuitive reporter (requires local maven install to work) </li>
+<li>updated config.yml file to enable netuitive reporter</li>
+</ul>
+</li>
+<li>netuitive-agent
+
+<ul>
+<li>linux agent to ship data to netuitive</li>
+<li>note: some environment variables need to be updated to configure the agent</li>
+</ul>
+</li>
+</ul>
+
+<p><img src="/diagram.png" alt="Alt" title="containers"></p>
+
+<h3>
+<a id="running-the-tests" class="anchor" href="#running-the-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the tests</h3>
+
+<pre><code>cd src/test/docker;
+</code></pre>
+
+<p>This directory contains a <code>docker-compose.yml</code> file which contains a test stack definition for testing.
+In that directory run: </p>
+
+<pre><code>docker-compose up -d 
+</code></pre>
+
+<p>Now run your tests</p>
+
+<p><code>./run_tests.sh</code></p>
+
+<p>Now shut down stack </p>
+
+<pre><code>docker-compose stop
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
